@@ -44,7 +44,6 @@ if selected_decade != "All":
 # Title
 st.title("🎬 Movie Insights Dashboard")
 
-
 # Top-Rated Movies
 st.subheader("⭐ Top-Rated Movies")
 top_movies = filtered_df[['Title', 'Rating', 'Vote Count (M)', 'Weighted Score']].sort_values(
@@ -182,7 +181,7 @@ st.pyplot(fig)
 st.subheader("⏳ Movie Duration Distribution")
 
 # Create Altair histogram
-hist_chart = alt.Chart(df).mark_bar().encode(
+hist_chart = alt.Chart(filtered_df).mark_bar().encode(
     alt.X('Duration (Mins)', bin=alt.Bin(maxbins=30), title="Duration (Minutes)"),
     alt.Y('count()', title="Frequency")
 ).properties(
@@ -210,7 +209,7 @@ if search_query:
     res = search_results[['Title', 'Duration (Mins)', 'Rating', 'Stars']]
     res['Rating'] = res['Rating'].map(lambda x: f"{x:.1f}")
     res['Stars'] = res['Stars'].apply(lambda x: ", ".join(x) if isinstance(x, list) else x)
-    res.reset_index(drop=True)
+    res = res.reset_index(drop=True)
     st.table(res)
 
 st.write("") 
@@ -239,7 +238,3 @@ st.write("")
 # ax.grid()
 
 # st.pyplot(fig)
-
-
-
-
